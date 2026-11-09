@@ -4,24 +4,24 @@
 
 | Field | Value | Field | Value |
 |---|---|---|---|
-| Project title | EscrowTick: Escrow-Based Ticketing with Refundable No-Show Deposits for Small Club Events | Student name | [YOUR FULL NAME] |
+| Project title | EscrowTick: Escrow-Based Ticketing with Refundable No-Show Deposits for Student Societies | Student name | [YOUR FULL NAME] |
 | Student ID | 21316347 | Instructor | [INSTRUCTOR NAME] |
 | Submission date | 10 November 2026 | Repository | https://github.com/hohq/Blockchain_big |
 | Testnet | Sepolia (chain ID 11155111) | | |
 
 ## 1. Project Title
 
-EscrowTick: Escrow-Based Ticketing with Refundable No-Show Deposits for Small Club Events
+EscrowTick: Escrow-Based Ticketing with Refundable No-Show Deposits for Student Societies
 
 ## 2. Background and Motivation
 
-Student clubs run ticketing events with capacities in the tens. Because these events are informal and low-budget, organisers rely on group-chat sign-up lists and personal payment QR codes. Such lists cannot enforce capacity, so events are over-booked on paper and under-attended in practice; payments cannot be matched to names at the door; refunds must be transferred by hand. Organisers absorb the cost of empty seats while students are turned away from a full list. Neither side acts in bad faith — neither can make a credible commitment to the other. The significance lies in frequency: a deposit is a few dollars, but a society runs dozens of such events a year.
+Student societies at a university run ticketing events — workshops, competitions, socials — with capacities in the tens. Because these events are informal and low-budget, organisers rely on group-chat sign-up lists and personal payment QR codes. Such lists cannot enforce capacity, so events are over-booked on paper and under-attended in practice; payments cannot be matched to names at the door; refunds must be transferred by hand. Organisers absorb the cost of empty seats while students are turned away from a full list. Neither side acts in bad faith — neither can make a credible commitment to the other. The significance lies in frequency: a deposit is a few dollars, but a society runs dozens of such events a year, and a university hosts hundreds of societies.
 
-**Users and stakeholders.** Organisers need predictable attendance; attendees need a low-effort way to recover deposits; check-in volunteers verify attendance at the door; student development offices allocate funding on attendance; community groups share the same constraints.
+**Users and stakeholders.** Organisers need predictable attendance; attendees need a low-effort way to recover deposits; check-in volunteers verify attendance at the door; the student union or student affairs office approves societies and allocates funding on attendance — but is an unwilling custodian of student money.
 
 **Limitations of existing approaches.** Group-chat lists cannot enforce capacity or handle money. Online forms cannot collect or refund money. Commercial platforms (Eventbrite, 活动行) target commercial events, charge fees, hold funds until after the event, and execute refund rules at their discretion. Payment QR codes are irreversible and cannot be linked to an attendance. University systems are closed to informal clubs. Each alternative either cannot hold money, or holds it in a way that requires trust in the holder.
 
-**Why blockchain.** A database can record a capacity limit and a refund policy; it cannot make the *execution* of that policy independent of the party holding the money. Here the organiser or platform holds the deposits and decides whether to return them. A contract changes the trust structure: the deposit is held by code, and the release conditions — check in and it returns, fail to appear and it is forfeited, cancel and everything is refunded — are fixed at creation and visible before payment. This is when on-chain escrow beats a database: opposed interests, no trusted intermediary, and payment released by a rule rather than a judgement.
+**Why blockchain.** A database can record a capacity limit and a refund policy; it cannot make the *execution* of that policy independent of the party holding the money. Here the organiser holds the deposits and decides whether to return them. The student union can vouch for a society but has no appetite to hold and refund hundreds of small deposits, so the only alternatives are to trust the organiser or to invent a custodian. A contract changes the trust structure: the deposit is held by code, and the release conditions — check in and it returns, fail to appear and it is forfeited, cancel and everything is refunded — are fixed at creation and visible before payment. This is when on-chain escrow beats a database: opposed interests, no trusted intermediary, and payment released by a rule rather than a judgement.
 
 ## 3. Project Objectives
 
@@ -40,7 +40,7 @@ Student clubs run ticketing events with capacities in the tens. Because these ev
 
 | Role | Permissions |
 |---|---|
-| Administrator (deployer) | Approve or revoke organisers; pause new purchases. **Cannot move, withdraw or redirect user funds.** |
+| Administrator (student union) | Approve or revoke societies; pause new purchases. **Cannot move, withdraw or redirect user funds.** |
 | Organiser | Create events; set capacity, price, deposit and deadlines; nominate a check-in delegate; check in attendees; finalise or cancel own events; withdraw revenue. |
 | Check-in delegate | Check in attendees for one nominated event only. |
 | Attendee | Buy while the sale is open; cancel before the deadline; withdraw refunds and returned deposits. |
@@ -53,7 +53,7 @@ Student clubs run ticketing events with capacities in the tens. Because these ev
 
 **Ether, tokens and NFTs.** Native Ether only; no ERC-20 (a stablecoin dependency adds approval and price concerns with no benefit for small deposits). No ERC-721: a ticket must not be transferable, so a token standard would need its transfer logic overridden purely to disable it; internal records give the same guarantee with less code.
 
-**Exclusions and assumptions.** Excluded: resale, anti-scalping caps, reputation scoring, ERC-20 or fiat rails, dispute arbitration (none is needed — whether an attendee checked in is a boolean on-chain, not a judgement), mobile application. Assumed: the administrator approves organisers as a lightweight onboarding gate; check-in is performed honestly by someone who can observe attendance; attendees hold test ETH; capacity is bounded.
+**Exclusions and assumptions.** Excluded: resale, anti-scalping caps, reputation scoring, ERC-20 or fiat rails, dispute arbitration (none is needed — whether an attendee checked in is a boolean on-chain, not a judgement), cross-institution deployment, mobile application. Assumed: the administrator approves societies as a lightweight onboarding gate; check-in is performed honestly by someone who can observe attendance; attendees hold test ETH; capacity is bounded. The design generalises to other small community groups, but evaluation is scoped to a single university.
 
 ## 5. Preliminary Smart Contract Design
 

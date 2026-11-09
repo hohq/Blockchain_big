@@ -10,7 +10,7 @@ CSIT5760 Blockchain and Smart Contracts — Individual Project
 
 ## Summary
 
-EscrowTick is a Solidity smart contract that lets student clubs publish ticketing events and
+EscrowTick is a Solidity smart contract that lets student societies publish ticketing events and
 holds ticket payments and refundable deposits in escrow. Deposits are returned automatically
 when an attendee checks in, forfeited to the organiser when an attendee does not appear, and
 refunded in full if the event is cancelled. Neither the organiser nor any platform holds the
