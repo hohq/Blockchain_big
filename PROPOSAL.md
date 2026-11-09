@@ -59,7 +59,7 @@ Student societies at a university run ticketing events — workshops, competitio
 
 | Component | Planned design | Purpose / rule |
 |---|---|---|
-| Structure and state | One `EventTicketing` contract; `events[eventId]`, `tickets[eventId][attendee]`, `approvedOrganizers`, `pendingBalance`, `paused` | One deployment serves every club |
+| Structure and state | One `EventTicketing` contract; `events[eventId]`, `tickets[eventId][attendee]`, `approvedOrganizers`, `pendingBalance`, `paused` | One deployment serves every society |
 | Structs and enum | `Event { organizer, capacity, sold, checkedIn, price, deposit, saleEnd, eventEnd, state, metadataURI, delegate }`; `Ticket { paid, checkedIn, refunded }`; `EventState { OnSale, SoldOut, Finished, Cancelled }` | Configuration plus explicit lifecycle |
 | Access control | Modifiers `onlyAdmin`, `onlyEventOrganizer`, `onlyCheckInAuthority`, `whenNotPaused`; custom errors such as `SoldOut`, `SaleClosed`, `AlreadyCheckedIn` | Testable failure modes |
 | Settlement | Purchase credits `price + deposit`; check-in credits the deposit back; finalisation credits the organiser `sold × price + (sold − checkedIn) × deposit`; cancellation credits every attendee `price + deposit` | Accounts reconcile exactly; balance reaches zero |
